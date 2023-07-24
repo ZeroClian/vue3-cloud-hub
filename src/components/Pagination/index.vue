@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <h1>nihao</h1>
-    <SvgIcon name="delete"></SvgIcon>
-    <Pagination />
+  <div class="">
+    <h1>分页插件</h1>
   </div>
 </template>
 
