@@ -12,6 +12,8 @@ app.use(ElementPlus, {
 })
 import 'virtual:svg-icons-register'
 import globalComponent from '@/components'
+//安装自定义插件
 app.use(globalComponent)
+import '@/styles/index.scss'
 //svg插件需要配置代码
 app.mount('#app')

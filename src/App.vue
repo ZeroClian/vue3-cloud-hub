@@ -1,11 +1,11 @@
 <template>
   <div>
     <h1>nihao</h1>
-    <SvgIcon name="delete"></SvgIcon>
+    <SvgIcon name="home"></SvgIcon>
     <Pagination />
   </div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>
