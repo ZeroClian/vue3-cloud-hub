@@ -8,7 +8,7 @@ interface dataType {
 }
 
 export interface loginResponseData {
-  code: string
+  code: number
   data: dataType
 }
 
@@ -25,6 +25,6 @@ interface userInfo {
 }
 
 export interface userResponseData {
-  code: string
+  code: number
   checkUser: userInfo
 }

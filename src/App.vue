@@ -1,8 +1,6 @@
 <template>
   <div>
-    <h1>nihao</h1>
-    <SvgIcon name="home"></SvgIcon>
-    <Pagination />
+    <router-view></router-view>
   </div>
 </template>
 
