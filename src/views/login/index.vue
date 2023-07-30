@@ -47,13 +47,14 @@
 <script setup lang="ts">
 import { User, Lock } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import { getTime } from '@/utils/time'
 import useUserStore from '@/store/modules/user'
 
 let useStore = useUserStore()
 let $router = useRouter()
+let $route = useRoute()
 let loading = ref(false)
 let loginForm = reactive({
   username: 'admin',
@@ -65,7 +66,8 @@ const login = async () => {
   loading.value = true
   try {
     await useStore.userLogin(loginForm)
-    $router.push('/')
+    let redirect: any = $route.query.redirect
+    $router.push({ path: redirect || '/' })
     ElNotification({
       type: 'success',
       message: '欢迎回来',
@@ -80,7 +82,7 @@ const login = async () => {
     })
   }
 }
-const validatorPassword = (rule: any, value: any, callback: any) => {
+const validatorPassword = (_rule: any, value: any, callback: any) => {
   if (/^[a-zA-Z0-9]\w{5,17}$/.test(value)) {
     callback()
   } else {

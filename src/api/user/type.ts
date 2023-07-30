@@ -27,5 +27,5 @@ interface userInfo {
 
 export interface userResponseData {
   code: number
-  checkUser: userInfo
+  data: userInfo
 }
