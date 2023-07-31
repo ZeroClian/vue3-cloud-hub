@@ -1,6 +1,6 @@
 //创建用户相关的小仓库
 import { defineStore } from 'pinia'
-import { reqLogin, reqUserInfo } from '@/api/user'
+import { reqLogin, reqLogout, reqUserInfo } from '@/api/user'
 import type { UserState } from './types/type'
 import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 import { constantRoute } from '@/router/routes'
@@ -24,26 +24,32 @@ const useUserStore = defineStore('User', {
         SET_TOKEN(result.data.token)
         return 'ok'
       } else {
-        return Promise.reject(new Error(result.data.message))
+        return Promise.reject(new Error(result.message))
       }
     },
     async userInfo() {
       const result: any = await reqUserInfo()
       if (result.code == 200) {
         //本地持久化
-        this.username = result.data.checkUser.username
-        this.avatar = result.data.checkUser.avatar
+        this.username = result.data.name
+        this.avatar = result.data.avatar
         return 'ok'
       } else {
-        return Promise.reject(new Error(result.data.message))
+        return Promise.reject(new Error(result.message))
       }
     },
-    userLogout() {
-      //退出登陆API，后续补充
-      this.token = ''
-      this.username = ''
-      this.avatar = ''
-      REMOVE_TOKEN()
+    async userLogout() {
+      const result: any = await reqLogout()
+      if (result.code == 200) {
+        //退出登陆API，后续补充
+        this.token = ''
+        this.username = ''
+        this.avatar = ''
+        REMOVE_TOKEN()
+        return 'ok'
+      } else {
+        return Promise.reject(new Error(result.message))
+      }
     },
   },
   getters: {},

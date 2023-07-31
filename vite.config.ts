@@ -36,10 +36,10 @@ export default defineConfig(({ command, mode }) => {
     //代理跨域
     server: {
       proxy: {
-        [env.VITE_APP_BASE_API]: {
-          target: env.VITE_SERVER,
+        '/api': {
+          target: env.VITE_SERVE,
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
+          rewrite: (path) => path.replace(/^\/api/, '/service'),
         },
       },
     },
