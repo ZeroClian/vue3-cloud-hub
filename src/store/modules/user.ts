@@ -4,7 +4,11 @@ import { reqLogin, reqLogout, reqUserInfo } from '@/api/user'
 import type { UserState } from './types/type'
 import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 import { constantRoute } from '@/router/routes'
-import { loginFormData, loginResponseData, userInfoResponseData } from '@/api/user/type'
+import {
+  loginFormData,
+  loginResponseData,
+  userInfoResponseData,
+} from '@/api/user/type'
 const useUserStore = defineStore('User', {
   //存储数据
   state: (): UserState => {
