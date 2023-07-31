@@ -4,6 +4,7 @@ import { reqLogin, reqLogout, reqUserInfo } from '@/api/user'
 import type { UserState } from './types/type'
 import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 import { constantRoute } from '@/router/routes'
+import { loginFormData, loginResponseData, userInfoResponseData } from '@/api/user/type'
 const useUserStore = defineStore('User', {
   //存储数据
   state: (): UserState => {
@@ -16,8 +17,8 @@ const useUserStore = defineStore('User', {
   },
   //逻辑
   actions: {
-    async userLogin(data: any) {
-      const result: any = await reqLogin(data)
+    async userLogin(data: loginFormData) {
+      const result: loginResponseData = await reqLogin(data)
       if (result.code == 200) {
         //本地持久化
         this.token = result.data.token
@@ -28,7 +29,7 @@ const useUserStore = defineStore('User', {
       }
     },
     async userInfo() {
-      const result: any = await reqUserInfo()
+      const result: userInfoResponseData = await reqUserInfo()
       if (result.code == 200) {
         //本地持久化
         this.username = result.data.name
