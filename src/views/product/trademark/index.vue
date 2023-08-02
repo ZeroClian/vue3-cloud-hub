@@ -42,7 +42,7 @@ const pageSize = ref<number>(5)
 const total = ref<number>(0)
 const records = ref()
 onMounted(() => {
-  getHasTrademark(pageNo.value, pageSize.value)
+  getHasTrademark()
 })
 const getHasTrademark = async () => {
   const result = await reqHasTrademark(pageNo.value, pageSize.value)
