@@ -53,6 +53,8 @@ const useUserStore = defineStore('User', {
         REMOVE_TOKEN()
         return 'ok'
       } else {
+        this.token = ''
+        REMOVE_TOKEN()
         return Promise.reject(new Error(result.message))
       }
     },
