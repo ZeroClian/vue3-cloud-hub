@@ -139,6 +139,39 @@ export const constantRoute = [
     ],
   },
   {
+    path: '/document',
+    component: () => import('@/layout/index.vue'),
+    name: 'Document',
+    meta: {
+      title: '参考文档',
+      hidden: false,
+      icon: 'Document',
+    },
+    redirect: '/document/element-plus',
+    children: [
+      {
+        path: '/document/element-plus',
+        component: () => import('@/views/document/element-plus/index.vue'),
+        name: 'Element-Plus',
+        meta: {
+          title: 'element-plus',
+          hidden: false,
+          icon: 'Tickets',
+        },
+      },
+      {
+        path: '/document/vue',
+        component: () => import('@/views/document/vue/index.vue'),
+        name: 'Vue',
+        meta: {
+          title: 'Vue',
+          hidden: false,
+          icon: 'Tickets',
+        },
+      },
+    ],
+  },
+  {
     path: '/404',
     component: () => import('@/views/404/index.vue'),
     name: '404',
