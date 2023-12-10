@@ -25,8 +25,9 @@ const useUserStore = defineStore('User', {
       const result: loginResponseData = await reqLogin(data)
       if (result.code == 200) {
         //本地持久化
-        this.token = result.data.token
+        // this.token = result.data.token
         SET_TOKEN(result.data.token)
+        this.token = GET_TOKEN()
         return 'ok'
       } else {
         return Promise.reject(new Error(result.message))
@@ -53,7 +54,7 @@ const useUserStore = defineStore('User', {
         REMOVE_TOKEN()
         return 'ok'
       } else {
-        this.token = ''
+        // this.token = ''
         REMOVE_TOKEN()
         return Promise.reject(new Error(result.message))
       }

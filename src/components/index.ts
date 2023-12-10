@@ -1,7 +1,12 @@
 import SvgIcon from './SvgIcon/index.vue'
 import Pagination from './Pagination/index.vue'
+import Category from './Category/index.vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-const components: { [name: string]: Component } = { SvgIcon, Pagination }
+const components: { [name: string]: Component } = {
+  SvgIcon,
+  Pagination,
+  Category,
+}
 //对外暴露插件对象
 export default {
   install(app: App) {

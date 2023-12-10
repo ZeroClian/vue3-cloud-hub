@@ -51,14 +51,19 @@
     </el-card>
     <!-- 对话框组件 -->
     <el-dialog v-model="dialogFormVisible" :title="title">
-      <el-form style="width: 80%">
-        <el-form-item label="品牌名称" label-width="100px">
+      <el-form
+        style="width: 80%"
+        :model="trademark"
+        :rules="rules"
+        ref="formRef"
+      >
+        <el-form-item label="品牌名称" label-width="100px" prop="name">
           <el-input
             placeholder="请输入品牌名称"
             v-model="trademark.name"
           ></el-input>
         </el-form-item>
-        <el-form-item label="品牌LOGO" label-width="100px">
+        <el-form-item label="品牌LOGO" label-width="100px" prop="logoUrl">
           <el-upload
             class="avatar-uploader"
             action="/api/file/upload"
@@ -87,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted, reactive, nextTick } from 'vue'
 import {
   reqHasTrademark,
   reqAddOrUpdateTrademark,
@@ -100,6 +105,7 @@ const total = ref<number>(0)
 const records = ref()
 const title = ref()
 const dialogFormVisible = ref<boolean>(false)
+const formRef = ref()
 const trademark = reactive<any>({
   id: null,
   name: '',
@@ -129,6 +135,10 @@ const addTrademark = () => {
   dialogFormVisible.value = true
   trademark.name = ''
   trademark.logoUrl = ''
+  nextTick(() => {
+    formRef.value.clearValidate('name')
+    formRef.value.clearValidate('logoUrl')
+  })
 }
 const updateTrademark = (row: any) => {
   dialogFormVisible.value = true
@@ -136,6 +146,10 @@ const updateTrademark = (row: any) => {
   trademark.id = row.id
   trademark.name = row.name
   trademark.logoUrl = row.logoUrl
+  nextTick(() => {
+    formRef.value.clearValidate('name')
+    formRef.value.clearValidate('logoUrl')
+  })
 }
 const deleteTrademark = async (id: number) => {
   const result: any = await reqDeleteTrademark(id)
@@ -158,6 +172,7 @@ const cancel = () => {
   dialogFormVisible.value = false
 }
 const confirm = async () => {
+  await formRef.value.validate()
   let result: any = await reqAddOrUpdateTrademark(trademark)
   if (result.code == 200) {
     dialogFormVisible.value = false
@@ -203,6 +218,25 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
   uploadFile,
 ) => {
   trademark.logoUrl = response.data
+  formRef.value.clearValidate('logoUrl')
+}
+const validatorName = (rule: any, value: any, callBack: any) => {
+  if (value.trim().length >= 2) {
+    callBack()
+  } else {
+    callBack(new Error('品牌名称位数需大于等于两位'))
+  }
+}
+const validatorLogoUrl = (rule: any, value: any, callBack: any) => {
+  if (value) {
+    callBack()
+  } else {
+    callBack(new Error('Logo图片不能为空'))
+  }
+}
+const rules = {
+  name: [{ required: true, trigger: 'blur', validator: validatorName }],
+  logoUrl: [{ required: true, trigger: 'blur', validator: validatorLogoUrl }],
 }
 </script>
 
