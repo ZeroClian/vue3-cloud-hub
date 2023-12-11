@@ -56,7 +56,12 @@
       ></el-table-column>
       <el-table-column label="操作" width="300px" align="center">
         <template #="{ row, $index }">
-          <el-button type="primary" size="small" icon="User">
+          <el-button
+            type="primary"
+            size="small"
+            icon="User"
+            @click="editRole(row)"
+          >
             分配角色
           </el-button>
           <el-button
@@ -125,18 +130,68 @@
       </div>
     </template>
   </el-drawer>
+  <el-drawer v-model="drawerRole">
+    <template #header>
+      <h4>分配角色</h4>
+    </template>
+    <template #default>
+      <el-form>
+        <el-form-item label="用户账号:" prop="username">
+          <el-input
+            placeholder="请输入登录账号"
+            v-model="userDto.username"
+            disabled="true"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="角色列表">
+          <el-checkbox
+            v-model="checkAll"
+            :indeterminate="isIndeterminate"
+            @change="handleCheckAllChange"
+          >
+            全选
+          </el-checkbox>
+          <el-checkbox-group
+            v-model="authRoles"
+            @change="handleCheckedRolesChange"
+          >
+            <el-checkbox
+              v-for="(role, index) in allRoles"
+              :key="index"
+              :label="role"
+            >
+              {{ role.roleName }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </el-form>
+    </template>
+    <template #footer>
+      <div style="flex: auto">
+        <el-button @click="cancelClick">取消</el-button>
+        <el-button type="primary" @click="updateRoles()">确定</el-button>
+      </div>
+    </template>
+  </el-drawer>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, reactive, nextTick } from 'vue'
-import { reqUserList, reqSaveOrUpdateUser, reqDeleteUser } from '@/api/acl/user'
+import {
+  reqUserList,
+  reqSaveOrUpdateUser,
+  reqDeleteUser,
+  reqUpdateUserRoles,
+} from '@/api/acl/user'
 import { UserDto } from '@/api/acl/user/type.ts'
+import { reqRoles } from '@/api/acl/role'
 import { ElMessage } from 'element-plus'
 const pageNo = ref<number>(1)
 const pageSize = ref<number>(5)
 let total = ref<number>(0)
 let userList = ref([])
 let drawer = ref<boolean>(false)
+let drawerRole = ref<boolean>(false)
 let buttonTitle = ref<string>('')
 let userDto = reactive<UserDto>({
   id: 0,
@@ -146,6 +201,10 @@ let userDto = reactive<UserDto>({
 })
 let name = ref<string>('')
 let formRef = ref<any>()
+let allRoles = ref<any>([])
+let authRoles = ref<any>([])
+const checkAll = ref<boolean>(false)
+const isIndeterminate = ref<boolean>(true)
 onMounted(() => {
   userInfo()
 })
@@ -185,6 +244,7 @@ const editUser = (row: any) => {
 }
 const cancelClick = () => {
   drawer.value = false
+  drawerRole.value = false
 }
 const confirmClick = async () => {
   await formRef.value.validate()
@@ -196,6 +256,7 @@ const confirmClick = async () => {
       message: userDto.id ? '更新成功' : '添加成功',
     })
     userInfo()
+    window.location.reload()
   } else {
     ElMessage({
       type: 'error',
@@ -231,12 +292,42 @@ const rules = {
     { required: true, trigger: 'blur', min: 5, message: '用户账号至少5位' },
   ],
   name: [
-    { required: true, trigger: 'blur', min: 5, message: '用户名称至少5位' },
+    { required: true, trigger: 'blur', min: 2, message: '用户名称至少2位' },
   ],
   password: [
     { required: true, min: 6, message: '密码长度至少6位', trigger: 'blur' },
     { trigger: 'blur', validator: validatorPassword },
   ],
+}
+const editRole = async (row: any) => {
+  drawerRole.value = true
+  Object.assign(userDto, JSON.parse(JSON.stringify(row)))
+  let result: any = await reqRoles(row.id as number)
+  if (result.code == 200) {
+    allRoles.value = result.data.allRoles
+    authRoles.value = result.data.authRoles
+  }
+}
+const handleCheckAllChange = (checkAll: boolean) => {
+  authRoles.value = checkAll ? allRoles.value : []
+  isIndeterminate.value = false
+}
+const handleCheckedRolesChange = (value: string[]) => {
+  const checkedCount = value.length
+  checkAll.value = checkedCount === allRoles.value.length
+  isIndeterminate.value =
+    checkedCount > 0 && checkedCount < allRoles.value.length
+}
+const updateRoles = async () => {
+  let dto: any = {
+    userId: userDto.id,
+    roleIds: authRoles.value.map((item) => item.id),
+  }
+  const result: any = await reqUpdateUserRoles(dto)
+  if (result.code == 200) {
+    drawerRole.value = false
+    userInfo()
+  }
 }
 </script>
 
