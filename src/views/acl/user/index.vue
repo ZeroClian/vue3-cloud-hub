@@ -20,9 +20,21 @@
     <el-button type="primary" size="default" @click="addUser">
       添加用户
     </el-button>
-    <el-button type="danger" size="default">批量删除</el-button>
+    <el-button
+      type="danger"
+      size="default"
+      :disabled="selectIds.length ? false : true"
+      @click="deleteSelectUser"
+    >
+      批量删除
+    </el-button>
     <!-- table展示用户信息 -->
-    <el-table :data="userList" style="margin: 10px 0px" border>
+    <el-table
+      @selection-change="selectChange"
+      :data="userList"
+      style="margin: 10px 0px"
+      border
+    >
       <el-table-column type="selection" align="center"></el-table-column>
       <el-table-column type="index" label="#" align="center"></el-table-column>
       <el-table-column prop="id" label="ID" align="center"></el-table-column>
@@ -72,14 +84,17 @@
           >
             编辑
           </el-button>
-          <el-button
-            type="danger"
-            size="small"
-            icon="Delete"
-            @click="deleteUser(row.id)"
+          <el-popconfirm
+            :title="`确定删除${row.name}？`"
+            width="260px"
+            @confirm="deleteUser(row.id)"
           >
-            删除
-          </el-button>
+            <template #reference>
+              <el-button type="danger" size="small" icon="Delete">
+                删除
+              </el-button>
+            </template>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -182,6 +197,7 @@ import {
   reqSaveOrUpdateUser,
   reqDeleteUser,
   reqUpdateUserRoles,
+  reqBatchDeleteUser,
 } from '@/api/acl/user'
 import { UserDto } from '@/api/acl/user/type.ts'
 import { reqRoles } from '@/api/acl/role'
@@ -205,11 +221,13 @@ let allRoles = ref<any>([])
 let authRoles = ref<any>([])
 const checkAll = ref<boolean>(false)
 const isIndeterminate = ref<boolean>(true)
+let selectIds = ref<number[]>([])
 onMounted(() => {
   userInfo()
 })
 const clearValue = () => {
   name.value = ''
+  userInfo()
 }
 const userInfo = async () => {
   const result: any = await reqUserList(
@@ -226,7 +244,7 @@ const addUser = () => {
   drawer.value = true
   buttonTitle.value = '添加'
   Object.assign(userDto, {
-    id: 0,
+    id: null,
     username: '',
     name: '',
     password: '',
@@ -325,8 +343,31 @@ const updateRoles = async () => {
   }
   const result: any = await reqUpdateUserRoles(dto)
   if (result.code == 200) {
+    ElMessage({
+      type: 'success',
+      message: '分配角色成功',
+    })
     drawerRole.value = false
     userInfo()
+  }
+}
+
+const selectChange = (value: any) => {
+  selectIds.value = value.map((item) => item.id)
+}
+const deleteSelectUser = async () => {
+  let result: any = await reqBatchDeleteUser(selectIds.value)
+  if (result.code == 200) {
+    ElMessage({
+      type: 'success',
+      message: '删除成功',
+    })
+    userInfo()
+  } else {
+    ElMessage({
+      type: 'error',
+      message: '删除失败',
+    })
   }
 }
 </script>
