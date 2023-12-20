@@ -48,9 +48,9 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 //获取父组件传递过来的路由数组
 defineProps(['menuList'])
-import { useRouter } from 'vue-router'
 const $router = useRouter()
 const goRoute = (vc: any) => {
   $router.push(vc.index)

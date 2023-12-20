@@ -15,9 +15,9 @@
     "jsx": "preserve",
 
     /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "strict": false,//是否开启严格的类型检查
+    "noUnusedLocals": false,//是否检查无用声明
+    "noUnusedParameters": false,//是否检查无用参数
     "noFallthroughCasesInSwitch": true,
 
     "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录

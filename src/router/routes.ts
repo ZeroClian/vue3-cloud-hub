@@ -1,4 +1,6 @@
-export const constantRoute = [
+import { RouteRecordRaw } from 'vue-router'
+
+export const constantRoute: Array<RouteRecordRaw> = [
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
