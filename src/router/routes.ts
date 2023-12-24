@@ -44,6 +44,20 @@ export const constantRoute: Array<RouteRecordRaw> = [
       icon: 'Platform',
     },
   },
+
+  {
+    path: '/404',
+    component: () => import('@/views/404/index.vue'),
+    name: '404',
+    meta: {
+      title: '404',
+      hidden: true,
+      icon: 'Crop',
+    },
+  },
+]
+//异步路由
+export const asyncRoute: Array<RouteRecordRaw> = [
   {
     path: '/acl',
     component: () => import('@/layout/index.vue'),
@@ -173,16 +187,9 @@ export const constantRoute: Array<RouteRecordRaw> = [
       },
     ],
   },
-  {
-    path: '/404',
-    component: () => import('@/views/404/index.vue'),
-    name: '404',
-    meta: {
-      title: '404',
-      hidden: true,
-      icon: 'Crop',
-    },
-  },
+]
+//任意路由
+export const anyRoute: Array<RouteRecordRaw> = [
   {
     path: '/:pathMatch(.*)',
     redirect: '/404',
