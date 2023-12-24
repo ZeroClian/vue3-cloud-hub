@@ -3,6 +3,7 @@ import App from '@/App.vue'
 //引入element-plus组件与样式
 import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 import globalComponent from '@/components'
 import router from './router'
 import pinia from './store'

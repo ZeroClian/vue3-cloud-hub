@@ -75,7 +75,7 @@ export default {
     width: calc(100% - $base-menu-width);
     height: $base-tabbar-height;
     transition: all 0.3s;
-    background: rgb(240, 238, 238);
+    // background: rgb(240, 238, 238);
     &.fold {
       width: calc(100vw - $base-menu-min-width);
       left: $base-menu-min-width;
@@ -87,7 +87,7 @@ export default {
     left: $base-menu-width;
     height: calc(100vh - $base-tabbar-height);
     width: calc(100% - $base-menu-width);
-    background: white;
+    // background: white;
     padding: 20px;
     overflow: auto;
     transition: all 0.3s;
