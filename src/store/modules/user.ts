@@ -31,6 +31,7 @@ const useUserStore = defineStore('User', {
       menuRoutes: constantRoute, //仓库存储需要生成菜单的路由数组
       avatar: '',
       username: '',
+      buttons: [],
     }
   },
   //逻辑
@@ -53,6 +54,7 @@ const useUserStore = defineStore('User', {
         //本地持久化
         this.username = result.data.name
         this.avatar = result.data.avatar
+        this.buttons = result.data.buttons
         const userAsyncRoutes = filterAsyncRoute(
           cloneDeep(asyncRoute),
           result.data.routes,

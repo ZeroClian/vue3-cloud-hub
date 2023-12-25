@@ -16,6 +16,7 @@
           icon="Plus"
           :disabled="row.level == 4 ? true : false"
           @click="addMenu(row)"
+          v-has="`btn.Permission.add`"
         >
           {{ row.level == 3 ? '添加功能' : '添加菜单' }}
         </el-button>
@@ -25,6 +26,7 @@
           icon="Edit"
           :disabled="row.level == 1 ? true : false"
           @click="editMenu(row)"
+          v-has="`btn.Permission.update`"
         >
           编辑
         </el-button>
@@ -34,6 +36,7 @@
           icon="Delete"
           :disabled="row.level == 1 ? true : false"
           @click="deletePermission(row.id)"
+          v-has="`btn.Permission.del`"
         >
           删除
         </el-button>

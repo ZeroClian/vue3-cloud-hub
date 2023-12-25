@@ -8,6 +8,7 @@ import globalComponent from '@/components'
 import router from './router'
 import pinia from './store'
 import './permission'
+import { isHasButton } from './directive/has'
 import 'element-plus/dist/index.css'
 import 'virtual:svg-icons-register'
 import '@/styles/index.scss'
@@ -26,3 +27,4 @@ app.use(router)
 app.use(pinia)
 //svg插件需要配置代码
 app.mount('#app')
+isHasButton(app)

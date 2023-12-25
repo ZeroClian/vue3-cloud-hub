@@ -6,6 +6,7 @@
         size="default"
         icon="Plus"
         @click="addTrademark"
+        v-has="`btn.Trademark.add`"
       >
         添加品牌
       </el-button>
@@ -29,12 +30,14 @@
               size="small"
               icon="Edit"
               @click="($event) => updateTrademark(row)"
+              v-has="`btn.Trademark.update`"
             ></el-button>
             <el-button
               type="danger"
               size="small"
               icon="Delete"
               @click="($event) => deleteTrademark(row.id)"
+              v-has="`btn.Trademark.del`"
             ></el-button>
           </template>
         </el-table-column>

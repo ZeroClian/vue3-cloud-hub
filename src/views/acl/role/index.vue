@@ -17,7 +17,12 @@
     </el-form>
   </el-card>
   <el-card style="margin: 10px 0px">
-    <el-button type="primary" size="default" @click="addUser">
+    <el-button
+      type="primary"
+      size="default"
+      @click="addUser"
+      v-has="`btn.Role.add`"
+    >
       添加角色
     </el-button>
     <el-button
@@ -25,6 +30,7 @@
       size="default"
       :disabled="selectIds.length ? false : true"
       @click="deleteRoles"
+      v-has="`btn.Role.del`"
     >
       批量删除
     </el-button>
@@ -68,6 +74,7 @@
             size="small"
             icon="User"
             @click="showPermission(row.id)"
+            v-has="`btn.Role.update`"
           >
             分配权限
           </el-button>
@@ -76,6 +83,7 @@
             size="small"
             icon="Edit"
             @click="updateRole(row)"
+            v-has="`btn.Role.update`"
           >
             编辑
           </el-button>
@@ -85,7 +93,12 @@
             @confirm="deleteRole(row.id)"
           >
             <template #reference>
-              <el-button type="danger" size="small" icon="Delete">
+              <el-button
+                type="danger"
+                size="small"
+                icon="Delete"
+                v-has="`btn.Role.del`"
+              >
                 删除
               </el-button>
             </template>
@@ -286,9 +299,15 @@ const showPermission = async (roleId: number) => {
   }
 }
 const setPermission = async () => {
+  //选中节点的ID
+  let arr = tree.value.getCheckedKeys()
+  //半选的ID
+  let arr1 = tree.value.getHalfCheckedKeys()
+  let permissionIds = arr.concat(arr1)
+  console.log(permissionIds)
   const result: any = await reqSetRolePermissions(
     selectRoleId.value,
-    tree.value.getCheckedKeys(),
+    permissionIds,
   )
   if (result.code == 200) {
     drawerPermission.value = false
