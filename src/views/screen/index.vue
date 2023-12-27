@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <h1>数据大瓶</h1>
+    <h1>待开发</h1>
   </div>
 </template>
 

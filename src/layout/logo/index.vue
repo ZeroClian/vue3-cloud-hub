@@ -1,12 +1,16 @@
 <template>
   <div class="logo" v-if="setting.logoHidden">
-    <img :src="setting.logo" />
-    <p>{{ setting.title }}</p>
+    <!-- <img :src="setting.logo" /> -->
+    <img src="https://zeroclian.cn/images/head.png" />
+    <p v-if="!layoutSettingStore.fold">{{ setting.title }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
 import setting from '@/setting'
+//获取骨架的小仓库
+import useLayOutSettingStore from '@/store/modules/setting'
+let layoutSettingStore = useLayOutSettingStore()
 </script>
 <script lang="ts">
 export default {

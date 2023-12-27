@@ -57,8 +57,8 @@ let $router = useRouter()
 let $route = useRoute()
 let loading = ref(false)
 let loginForm = reactive({
-  username: 'admin',
-  password: '123123',
+  username: 'test',
+  password: '111111',
 })
 let loginForms = ref()
 const login = async () => {

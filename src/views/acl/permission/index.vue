@@ -48,7 +48,6 @@
     v-model="dialogVisible"
     :title="menuData.id ? '更新' : '添加'"
     width="30%"
-    :before-close="handleClose"
   >
     <el-form label-position="right" label-width="80px">
       <el-form-item label="名称">

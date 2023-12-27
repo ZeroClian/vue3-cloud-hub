@@ -28,7 +28,8 @@ router.beforeEach(async (to: any, from: any, next: any) => {
           next({ ...to })
         } catch (error) {
           await userStore.userLogout()
-          next({ path: '/login', query: { redirect: to.path } })
+          // next({ path: '/login', query: { redirect: to.path } })
+          next({ path: '/login' })
         }
       }
     }
@@ -37,7 +38,8 @@ router.beforeEach(async (to: any, from: any, next: any) => {
     if (to.path == '/login') {
       next()
     } else {
-      next({ path: '/login', query: { redirect: to.path } })
+      // next({ path: '/login', query: { redirect: to.path } })
+      next({ path: '/login' })
     }
   }
 })

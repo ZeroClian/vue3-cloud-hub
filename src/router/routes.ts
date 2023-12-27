@@ -59,6 +59,39 @@ export const constantRoute: Array<RouteRecordRaw> = [
 //异步路由
 export const asyncRoute: Array<RouteRecordRaw> = [
   {
+    path: '/exam',
+    component: () => import('@/layout/index.vue'),
+    name: 'Exam',
+    meta: {
+      title: '备考指南',
+      hidden: false,
+      icon: 'Reading',
+    },
+    redirect: '/acl/search',
+    children: [
+      {
+        path: '/acl/search',
+        component: () => import('@/views/exam/search/index.vue'),
+        name: 'Search',
+        meta: {
+          title: '题目检索',
+          hidden: false,
+          icon: 'Search',
+        },
+      },
+      {
+        path: '/acl/bank',
+        component: () => import('@/views/exam/bank/index.vue'),
+        name: 'Bank',
+        meta: {
+          title: '题库',
+          hidden: false,
+          icon: 'Notebook',
+        },
+      },
+    ],
+  },
+  {
     path: '/acl',
     component: () => import('@/layout/index.vue'),
     name: 'Acl',
