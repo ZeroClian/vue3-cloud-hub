@@ -20,7 +20,7 @@ jobs:
           node-version: 16.14.x
 
       - name: Setup pnpm
-        run: npm install pnpm -g
+        run: npm install pnpm -g && pnpm update
 
       - name: install && build
         run: pnpm install && pnpm run build
