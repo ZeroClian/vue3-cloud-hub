@@ -18,6 +18,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.14.x
+
+      - name: Setup pnpm
+        run: ln -s /usr/local/nodejs/bin/pnpm /usr/local/bin
+        
       - name: install && build
         run: pnpm install && pnpm run build
         
