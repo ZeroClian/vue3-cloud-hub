@@ -22,7 +22,7 @@ jobs:
         with:
           version: 8.x
       - name: install && build
-        run: pnpm install && pnpm run build:pro
+        run: pnpm install --ignore-scripts && pnpm run build:pro
       - name: upload file
         uses: kostyaten/ssh-server-deploy@v4
         with: 
