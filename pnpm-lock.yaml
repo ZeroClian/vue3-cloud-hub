@@ -12,7 +12,7 @@ dependencies:
     specifier: ^1.4.0
     version: registry.npmmirror.com/axios@1.4.0
   echarts:
-    specifier: ^5.4.2
+    specifier: ^5.4.3
     version: registry.npmmirror.com/echarts@5.4.3
   echarts-liquidfill:
     specifier: ^3.1.0
