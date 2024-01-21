@@ -20,8 +20,8 @@ jobs:
           node-version: 16.14.x
 
       - name: Setup pnpm
-        run: ln -s /usr/local/nodejs/bin/pnpm /usr/local/bin
-        
+        run: npm install pnpm -g
+
       - name: install && build
         run: pnpm install && pnpm run build
         
