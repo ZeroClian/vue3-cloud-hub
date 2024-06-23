@@ -220,6 +220,29 @@ export const asyncRoute: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    path: '/background',
+    component: () => import('@/layout/index.vue'),
+    name: 'Background',
+    meta: {
+      title: '参考文档',
+      hidden: false,
+      icon: 'Document',
+    },
+    redirect: '/background/schedule',
+    children: [
+      {
+        path: '/background/schedule',
+        component: () => import('@/views/background/schedule/index.vue'),
+        name: 'Schedule',
+        meta: {
+          title: '后台任务',
+          hidden: false,
+          icon: 'Tickets',
+        },
+      },
+    ],
+  },
 ]
 //任意路由
 export const anyRoute: Array<RouteRecordRaw> = [
